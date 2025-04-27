@@ -1,0 +1,28 @@
+server:
+#    port: ${SERVER_PORT:443}
+  port: ${SERVER_PORT:15201}
+
+spring:
+  codec:
+    max-in-memory-size: 1024MB
+  application:
+    name: quic
+  # https://docs.spring.io/spring-boot/reference/features/ssl.html#features.ssl
+  # https://spring.io/blog/2023/06/07/securing-spring-boot-applications-with-ssl
+  # https://spring.io/blog/2023/11/07/ssl-hot-reload-in-spring-boot-3-2-0
+  ssl:
+    bundle:
+      pem:
+        server-http3:
+          key:
+            alias: server-http3
+          keystore:
+            certificate: classpath:crt.pem
+            private-key: classpath:key.pem
+logging:
+  level:
+    root: debug
+    io.netty.incubator.codec: info
+    org.springframework: debug
+    org.springframework.boot.autoconfigure: info
+    com.markruler: debug
